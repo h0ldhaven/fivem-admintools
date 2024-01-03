@@ -30,9 +30,9 @@ server_scripts {
     "client/i18n.lua",
     "locales/fr.lua",
     "config/config.lua",
-    "config/versionChecker.lua",
 
     "server/server.lua",
+    "server/versionChecker.lua",
 
     "server/reboot_sv.lua",
     "server/annonce_alpha_sv.lua",
