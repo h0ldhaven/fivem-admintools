@@ -30,6 +30,7 @@ server_scripts {
     "client/i18n.lua",
     "locales/fr.lua",
     "config/config.lua",
+    "config/versionChecker.lua",
 
     "server/server.lua",
 
