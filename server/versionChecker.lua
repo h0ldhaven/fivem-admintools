@@ -5,7 +5,7 @@ end
 
 -- check version and compare with git
 if (config.enableVersionNotifier) then
-    print("["..GetCurrentResourceName().."] Checking for updates...\n")
+    print("["..GetCurrentResourceName().."]: " .. i18n.translate("console_checking_update"))
 
     Citizen.CreateThread( function() 
         local updatepath = "/h0ldhaven/fivem-admintools" -- git path
@@ -15,13 +15,14 @@ if (config.enableVersionNotifier) then
             local currentVersion = LoadResourceFile(GetCurrentResourceName(), "version") -- get local file
 
             if not responseText then
-                print("Update check failed, where did the remote repository go ? ")
+                print(i18n.translate("console_checking_update_fail"))
             elseif currentVersion ~= responseText and tonumber(currentVersion) < tonumber(responseText) then
-                print("["..resourceName.."]: Une nouvelle version est disponible !\n Version Actuelle : " .. currentVersion .. " | Nouvelle Version : " .. responseText)
+                --print("["..resourceName.."]: Une nouvelle version est disponible !\n Version Actuelle : " .. currentVersion .. " | Nouvelle Version : " .. responseText)
+                print("["..resourceName.."]: " .. i18n.translate("console_update_version_available") .. i18n.translate("console_update_actual_version") .. currentVersion .. " | " .. i18n.translate("console_update_new_version") .. responseText)
             elseif tonumber(currentVersion) > tonumber(responseText) then
-                print("[".. resourceName .."]: version supérieur à l'originale.")
+                print("[".. resourceName .."]: " .. i18n.translate("console_checking_update_version_sup"))
             else
-                print("["..resourceName.."]: tout est à jour !")
+                print("["..resourceName.."]: " .. i18n.translate("console_checking_update_version_ok"))
             end
         end
 
