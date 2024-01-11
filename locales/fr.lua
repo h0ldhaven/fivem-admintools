@@ -1,7 +1,19 @@
 i18n.importData("fr", {
 	-- console messages
-	console_use_dev = "/!\\ Vous executez la version developpeur du script: ADMINTOOL !\n",
+	console_use_dev = "/!\\ Vous executez la version developpeur du script: ADMINTOOL ! \n",
 
+	console_checking_update = "Vérification des mises à jour.. \n",
+
+	console_update_fail = "La vérification de la mise à jour a échoué, où est passé le référentiel distant ? ",
+
+	console_update_version_sup = "Version supérieur à l'originale.",
+
+	console_update_version_available = "Une nouvelle version est disponible !\n",
+	console_update_actual_version = "Version Actuelle :",
+	console_update_new_version = "Nouvelle Version :",
+
+	console_update_version_ok = "tout est à jour ! enjoy !",
+	
 	-- admin general category
 	not_an_admin = "~r~Vous devez être administrateur pour faire cela.",
 	is_an_admin = "~g~Vous êtes administrateur, éxécution de la commande.",
