@@ -1,5 +1,8 @@
 i18n.importData("fr", {
-	-- general category
+	-- console messages
+	console_use_dev = "/!\\ Vous executez la version developpeur du script: ADMINTOOL !\n",
+
+	-- admin general category
 	not_an_admin = "~r~Vous devez être administrateur pour faire cela.",
 	is_an_admin = "~g~Vous êtes administrateur, éxécution de la commande.",
 
@@ -20,7 +23,7 @@ i18n.importData("fr", {
 	-- admin noclip mode category
 	Noclip_ON = "~g~Mode noclip activé !",
 	Noclip_OFF = "~r~Mode noclip desactivé !",
-	Noclip_no_noclip = "~r~Vous devez etre en Noclip pour faire cela.",
+	noclip_disabled = "~r~Vous devez etre en Noclip pour faire cela.",
 	Noclip_max_speed = "~r~Vous avez atteind la vitesse max de",
 	Noclip_min_speed = "~r~Vous avez atteind la vitesse minimum de",
 

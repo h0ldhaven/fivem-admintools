@@ -20,4 +20,3 @@ RegisterNetEvent("AdminTools_HUD:OFF")
 AddEventHandler("AdminTools_HUD:OFF", function()
 	HUDActive = false
 end)
-
