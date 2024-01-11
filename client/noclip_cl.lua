@@ -1,101 +1,36 @@
 -----------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------
------------------------------------------ NOTIFICATIONS ---------------------------------------------------
------------------------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------------------------
-local notificationParam = 1
-
--- variables de notifications
-function ShowNotification( text )
-    SetNotificationTextEntry("STRING")
-    AddTextComponentSubstringPlayerName(text)
-    DrawNotification(false, false)
-end
-function Notify(text)
-	SetNotificationTextEntry('STRING')
-	AddTextComponentString(text)
-	DrawNotification(false, true)
-end
-
-function ACstatus(x,y ,width,height,scale, text, r,g,b,a, outline)
-    SetTextFont(0)
-    SetTextProportional(0)
-    SetTextScale(scale, scale)
-    SetTextColour(r, g, b, a)
-    SetTextDropShadow(0, 0, 0, 0,255)
-    SetTextEdge(1, 0, 0, 0, 255)
-    SetTextDropShadow()
-    if(outline)then
-	    SetTextOutline()
-	end
-    SetTextEntry("STRING")
-    AddTextComponentString(text)
-    DrawText(x, y)
-end
-
-
------------------------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------------------------
 -----------------------------------------    SCRIPT    ----------------------------------------------------
 -----------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------
-RegisterNetEvent("AdminTools:visible")
-AddEventHandler("AdminTools:visible", function()
-	admin_visible()
-end)
-local visible = false
-local RGBActiveInvisible = false
-local RGBActiveNoclip = false
-local StatusVisible = "Activé"
 
-function admin_visible()
-	visible = not visible
-	local ped = GetPlayerPed(-1)
-	if visible then -- activé
-		SetEntityVisible(ped, false, false)
-		TriggerEvent("AdminTools_General:sendNotification", notificationParam, "~g~Mode invisible activé !", 0.080)
-		RGBActiveInvisible = true
-		while true do
-			Citizen.Wait(0)
-			if (RGBActiveInvisible == true) then
-				ACstatus(0.01, 0.09, 1.0,1.0,0.4, "Mode Invisible: "..StatusVisible, 0, 255, 0, 255, 200)
-			end
-		end
-	else -- désactivé
-		SetEntityVisible(ped, true, false)
-		RGBActiveInvisible = false
-		TriggerEvent("AdminTools_General:sendNotification", notificationParam, "~r~Mode invisible desactivé !", 0.080)
-	end
-end
+local noclip = false
+local noclip_speed = 1.0
+local RGBActiveNoclip = false
+local StatusNoclip = i18n.translate("Noclip_enabled") .. i18n.translate("Noclip_speed") .. "("..noclip_speed..")."
 
 RegisterNetEvent("AdminTools:noclip")
 AddEventHandler("AdminTools:noclip", function()
 	admin_no_clip()
 end)
 
--- FONCTION NOCLIP 
-local noclip = false
-local noclip_speed = 1.0
-
-local StatusNoclip = "Activé, ("..noclip_speed..")."
-
 function admin_no_clip()
 	noclip = not noclip
 	local ped = GetPlayerPed(-1)
 	if noclip then -- activé
 		--SetEntityVisible(ped, false, false)
-		TriggerEvent("AdminTools_General:sendNotification", notificationParam, "~g~Noclip activé !", 0.080)
+		TriggerEvent("AdminTools_General:sendNotification", config.notificationParam, "CHAR_DETONATEPHONE", i18n.translate("Noclip_ON"), 0.080)
 		RGBActiveNoclip = true
 		while true do
 			Citizen.Wait(0)
 			if (RGBActiveNoclip == true) then
-				ACstatus(0.01, 0.06, 1.0,1.0,0.4, "Mode No-Clip :  "..StatusNoclip, 0, 255, 0, 255, 200)
+				ACstatus(0.01, 0.06, 1.0,1.0,0.4, i18n.translate("Noclip_HUD") .. StatusNoclip, 0, 255, 0, 255, 200)
 			end
 		end
 	else -- désactivé
 		--SetEntityVisible(ped, true, false)
 		RGBActiveNoclip = false
-		TriggerEvent("AdminTools_General:sendNotification", notificationParam, "~r~Noclip desactivé !", 0.080)
+		TriggerEvent("AdminTools_General:sendNotification", config.notificationParam, "CHAR_DETONATEPHONE", i18n.translate("Noclip_OFF"), 0.080)
 	end
 end
 
@@ -103,14 +38,14 @@ RegisterNetEvent("AdminTools:noclip+")
 AddEventHandler("AdminTools:noclip+", function()
 	if noclip then
 		if (noclip_speed >= 1.8) then
-			TriggerEvent("AdminTools_General:sendNotification", notificationParam, "~r~Vous avez atteind la vitesse max de ~y~".. noclip_speed .. "~r~." , 0.100)
+			TriggerEvent("AdminTools_General:sendNotification", config.notificationParam, "CHAR_DETONATEPHONE", i18n.translate("Noclip_max_speed") .. "~y~ " .. noclip_speed .. "~r~." , 0.100)
 		else
 			--TriggerEvent("AdminTools_General:sendNotification", notificationParam, "~w~Vitesse du noclip: ".. noclip_speed ..".", 0.100)
 			noclip_speed = noclip_speed + 0.2
-			StatusNoclip = "Activé, ("..noclip_speed..")."
+			StatusNoclip = i18n.translate("Noclip_enabled") .. i18n.translate("Noclip_speed") .. "("..noclip_speed..")."
 		end
 	else
-		TriggerEvent("AdminTools_General:sendNotification", notificationParam, "~r~Vous devez etre en Noclip pour changer la vitesse", 0.100)
+		TriggerEvent("AdminTools_General:sendNotification", config.notificationParam, "CHAR_DETONATEPHONE", i18n.translate("Noclip_no_noclip"), 0.100)
 	end
 end)
 
@@ -118,14 +53,14 @@ RegisterNetEvent("AdminTools:noclip-")
 AddEventHandler("AdminTools:noclip-", function()
 	if noclip then
 		if (noclip_speed <= 0.3) then
-			TriggerEvent("AdminTools_General:sendNotification", notificationParam, "~r~Vous avez atteind la vitesse minimum de ~y~".. noclip_speed .. "~r~." , 0.100)
+			TriggerEvent("AdminTools_General:sendNotification", config.notificationParam, "CHAR_DETONATEPHONE", i18n.translate("Noclip_min_speed") .. "~y~ ".. noclip_speed .. "~r~." , 0.100)
 		else
 			--TriggerEvent("AdminTools_General:sendNotification", notificationParam, "~w~Vitesse du noclip: ".. noclip_speed ..".", 0.100)
 			noclip_speed = noclip_speed - 0.2
-			StatusNoclip = "Activé, ("..noclip_speed..")."
+			StatusNoclip = i18n.translate("Noclip_enabled") .. i18n.translate("Noclip_speed") .. "("..noclip_speed..")."
 		end
 	else
-		TriggerEvent("AdminTools_General:sendNotification", notificationParam, "~r~Vous devez etre en Noclip pour changer la vitesse", 0.100)
+		TriggerEvent("AdminTools_General:sendNotification", config.notificationParam, "CHAR_DETONATEPHONE", i18n.translate("Noclip_no_noclip"), 0.100)
 	end
 end)
 
@@ -134,9 +69,9 @@ AddEventHandler("AdminTools:noclip0", function()
 	if noclip then
 		noclip_speed = 1.0
 		--TriggerEvent("AdminTools_General:sendNotification", notificationParam, "~w~Vitesse du noclip: ".. noclip_speed ..".", 0.100)
-		StatusNoclip = "Activé, ("..noclip_speed..")."
+		StatusNoclip = i18n.translate("Noclip_enabled") .. i18n.translate("Noclip_speed") .. "("..noclip_speed..")."
 	else
-		TriggerEvent("AdminTools_General:sendNotification", notificationParam, "~r~Vous devez etre en Noclip pour Reset la vitesse", 0.100)
+		TriggerEvent("AdminTools_General:sendNotification", config.notificationParam, "CHAR_DETONATEPHONE", i18n.translate("Noclip_no_noclip"), 0.100)
 	end
 end)
 

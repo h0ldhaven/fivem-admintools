@@ -1,38 +1,42 @@
 -----------------------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------------------------
 --------------------------------------------- SCRIPT ------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------------------------
-local notificationParam = 1
 
 RegisterNetEvent("AdminCar:SpawnVeh")
 AddEventHandler("AdminCar:SpawnVeh", function()
-	TriggerServerEvent('AdminCar:CheckForSpawn')
+	if (isAdmin()) then
+		TriggerEvent("admincar:spawncar")
+	else
+		TriggerEvent("AdminTools:IsNotAdmin")
+	end
 end)
 
 RegisterNetEvent("AdminCar:ClearCar")
 AddEventHandler("AdminCar:ClearCar", function()
-	TriggerServerEvent('AdminCar:ClearCar')
+	if (isAdmin()) then
+		TriggerEvent("admincar:clearcar")
+	else
+		TriggerEvent("AdminTools:IsNotAdmin")
+	end
 end)
 
 RegisterNetEvent("AdminCar:RepairCar")
 AddEventHandler("AdminCar:RepairCar", function()
-	TriggerServerEvent('AdminCar:RepairCar')
+	if (isAdmin()) then
+		TriggerEvent("admincar:repairthecar")
+	else
+		TriggerEvent("AdminTools:IsNotAdmin")
+	end
 end)
 
 RegisterNetEvent("AdminCar:DestroyCar")
 AddEventHandler("AdminCar:DestroyCar", function()
-	TriggerServerEvent('AdminCar:DestroyCar')
+	if (isAdmin()) then
+		TriggerEvent("admincar:destroythecar")
+	else
+		TriggerEvent("AdminTools:IsNotAdmin")
+	end
 end)
-
-function IsInVehicle()
-  local ply = GetPlayerPed(-1)
-  if IsPedSittingInAnyVehicle(ply) then
-    return true
-  else
-    return false
-  end
-end
 
 RegisterNetEvent("admincar:spawncar")
 AddEventHandler("admincar:spawncar", function()
@@ -47,11 +51,11 @@ AddEventHandler("admincar:spawncar", function()
 		local veh = GetOnscreenKeyboardResult()
 	
 		if IsInVehicle() then
-			TriggerEvent("AdminTools_CarCmd:sendNotification", notificationParam, "~r~La livraison du véhicule ne peut pas être assuré.", 0.350)
-		else
+			TriggerEvent("AdminTools_General:sendNotification", config.notificationParam, "CHAR_LS_CUSTOMS", i18n.translate("car_spawn_fail"), 0.350)
+		elseis_an_admin
 				
 			if veh == nil then
-				TriggerEvent("AdminTools_CarCmd:sendNotification", notificationParam, "~r~La livraison du véhicule ne peut pas être assuré.", 0.350)
+				TriggerEvent("AdminTools_General:sendNotification", config.notificationParam, "CHAR_LS_CUSTOMS", i18n.translate("car_spawn_fail"), 0.350)
 			else
 				local x,y,z = table.unpack(GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0.0, 8.0, 0.5))
 				local myPed = GetPlayerPed(-1)
@@ -78,7 +82,7 @@ AddEventHandler("admincar:spawncar", function()
 					
 					local namehaskcar = GetEntityModel(GetVehiclePedIsUsing(GetPlayerPed(-1)))
 					local namecar = GetDisplayNameFromVehicleModel(namehaskcar)
-					TriggerEvent("AdminTools_CarCmd:sendNotification", notificationParam, "~g~Votre " .. namecar .. " a bien été livré !", 0.350)
+					TriggerEvent("AdminTools_General:sendNotification", config.notificationParam, "CHAR_LS_CUSTOMS", i18n.translate("car_spawn_success") .. "\n(" .. namecar .. ")", 0.350)
 				end)
 			end
 		end
@@ -92,7 +96,7 @@ AddEventHandler("admincar:clearcar", function()
 		local vehicleusing = GetVehiclePedIsUsing(GetPlayerPed(-1))
 		local namehaskcar = GetEntityModel(vehicleusing)
 		local namecar = GetDisplayNameFromVehicleModel(namehaskcar)
-		TriggerEvent("AdminTools_CarCmd:sendNotification", notificationParam, "~g~Votre ".. namecar .." a bien été rangé.", 0.350)
+		TriggerEvent("AdminTools_General:sendNotification", config.notificationParam, "CHAR_LS_CUSTOMS", i18n.translate("car_delete_success") .. "\n(" .. namecar ..")", 0.350)
 		playerPed = GetPlayerPed(-1)
 		Citizen.InvokeNative(0xAE3CBE5BF394C9C9, Citizen.PointerValueIntInitialized(GetVehiclePedIsIn(playerPed, false)))
 	else
@@ -104,11 +108,11 @@ AddEventHandler("admincar:clearcar", function()
 		if(DoesEntityExist(vehicleHandle)) then
 			local namehaskcar = GetEntityModel(vehicleHandle)
 			local namecar = GetDisplayNameFromVehicleModel(namehaskcar)
-			TriggerEvent("AdminTools_CarCmd:sendNotification", notificationParam, "~g~Votre ".. namecar .." a bien été rangé.", 0.350)
+			TriggerEvent("AdminTools_General:sendNotification", config.notificationParam, "CHAR_LS_CUSTOMS", i18n.translate("car_delete_success") .. "\n(" .. namecar ..")", 0.350)
 			SetEntityAsMissionEntity(vehicleHandle, true, true)
 			Citizen.InvokeNative(0xEA386986E786A54F, Citizen.PointerValueIntInitialized(vehicleHandle))
 		else
-			TriggerEvent("AdminTools_CarCmd:sendNotification", notificationParam, "~r~Il n'y a pas de véhicule à proximité.", 0.350)
+			TriggerEvent("AdminTools_General:sendNotification", config.notificationParam, "CHAR_LS_CUSTOMS", i18n.translate("car_delete_no_vehicle"), 0.350)
 		end
 	end
 end)
@@ -126,9 +130,9 @@ AddEventHandler("admincar:repairthecar", function()
 		
 		local namehaskcar = GetEntityModel(vehicle)
 		local namecar = GetDisplayNameFromVehicleModel(namehaskcar)
-		--TriggerEvent("AdminTools_CarCmd:sendNotification", notificationParam, "~g~Votre ".. namecar .." a bien été réparé !", 0.350)
+		TriggerEvent("AdminTools_General:sendNotification", config.notificationParam, "CHAR_LS_CUSTOMS", i18n.translate("car_repair_success"), 0.350)
 	else
-		TriggerEvent("AdminTools_CarCmd:sendNotification", notificationParam, "~r~Cela fonctionne uniquement si vous êtes dans un véhicule.", 0.350)
+		TriggerEvent("AdminTools_General:sendNotification", config.notificationParam, "CHAR_LS_CUSTOMS", i18n.translate("car_not_in_vehicle"), 0.350)
 	end
 end)
 
@@ -153,22 +157,8 @@ AddEventHandler("admincar:destroythecar", function()
 			
 		local namehaskcar = GetEntityModel(vehicle)
 		local namecar = GetDisplayNameFromVehicleModel(namehaskcar)
-		--TriggerEvent("AdminTools_CarCmd:sendNotification", notificationParam, "~g~Votre ".. namecar .." a bien été détruite !", 0.350)
+		TriggerEvent("AdminTools_General:sendNotification", config.notificationParam, "CHAR_LS_CUSTOMS", i18n.translate("car_destroy_success"), 0.350)
 	else
-		TriggerEvent("AdminTools_CarCmd:sendNotification", notificationParam, "~r~Cela fonctionne uniquement si vous êtes dans un véhicule.", 0.350)
+		TriggerEvent("AdminTools_General:sendNotification", config.notificationParam, "CHAR_LS_CUSTOMS", i18n.translate("car_not_in_vehicle"), 0.350)
 	end
 end)
-
-
--- variables de notifications
-function ShowNotification( text )
-    SetNotificationTextEntry("STRING")
-    AddTextComponentSubstringPlayerName(text)
-    DrawNotification(false, false)
-end
-
-function Notify(text)
-	SetNotificationTextEntry('STRING')
-	AddTextComponentString(text)
-	DrawNotification(false, true)
-end

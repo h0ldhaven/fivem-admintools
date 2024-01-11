@@ -1,14 +1,11 @@
 RegisterNetEvent('adminskin:LaunchCommand')
-AddEventHandler('adminskin:LaunchCommand', function(source)
-	TriggerServerEvent('adminskin:checkperms', source)
+AddEventHandler('adminskin:LaunchCommand', function()
+  if (isAdmin()) then
+    ChangePedSkin()
+  else
+    TriggerEvent("AdminTools:IsNotAdmin")
+  end
 end)
-
-RegisterNetEvent('adminskin:executeskin')
-AddEventHandler('adminskin:executeskin', function(source)
-	ChangePedSkin(source)
-end)
-
-local notificationParam = 1
 
 -- change skin
 function ChangePedSkin()
@@ -42,20 +39,9 @@ function ChangePedSkin()
           SetPedPropIndex(GetPlayerPed(-1), 0, 0, 0, 2)
         end
   
-        TriggerEvent("AdminTools_General:sendNotification", notificationParam, "Skin Changé !", 0.200)
+        TriggerEvent("AdminTools_General:sendNotification", config.notificationParam, "CHAR_DETONATEPHONE", i18n.translate("skin_success"), 0.200)
       else
-        TriggerEvent("AdminTools_General:sendNotification", notificationParam, "Désolé, ce skin n'éxiste pas !", 0.200)
+        TriggerEvent("AdminTools_General:sendNotification", config.notificationParam, "CHAR_DETONATEPHONE", i18n.translate("skin_fail"), 0.200)
       end
-    --else
-      --TriggerEvent("AdminTools_General:sendNotification", notificationParam, "Vous n'avez rien renseigné !", 0.200)
     end
-end
-
-function IsInVehicle()
-  local ply = GetPlayerPed(-1)
-  if IsPedSittingInAnyVehicle(ply) then
-    return true
-  else
-    return false
-  end
 end

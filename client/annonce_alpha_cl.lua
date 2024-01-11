@@ -5,7 +5,6 @@ local DecompteTextReason = nil
 local secondsRemaining = 0
 local holdingupTest = false
 local hasBeenInitialised = false
-local notificationParam = 1
 
 announcestringT = false
 lastforT = 5
@@ -13,31 +12,17 @@ lastforT = 5
 local volume = 0.5
 local sondecompte = 'decompte';
 
-function DisplayHelpText(str)
-	SetTextComponentFormat("STRING")
-	AddTextComponentString(str)
-	DisplayHelpTextFromStringLabel(0, 0, 1, -1)
-end
-
-function Notify(text)
-    SetNotificationTextEntry('STRING')
-    AddTextComponentString(text)
-    DrawNotification(false, true)
-end
-
 RegisterCommand('test', function(source, args, rawCommand)
 	TriggerServerEvent('decompte:checkperms', source)
 end)
 
 RegisterNetEvent('Decompte:LaunchCommand')
 AddEventHandler('Decompte:LaunchCommand', function()
-	TriggerServerEvent('decompte:checkperms')
-end)
-
--- lancement de l'alerte evenement
-RegisterNetEvent('decompte:ISNOTOK')
-AddEventHandler('decompte:ISNOTOK', function(source)
-	TriggerEvent("AdminTools_Decompte:sendNotification", notificationParam, "~r~Vous n'avez pas le droit de faire cela !", 0.3)
+	if (isAdmin()) then
+		TriggerEvent("decompte:ISOK")
+	else
+		TriggerEvent("AdminTools:IsNotAdmin")
+	end
 end)
 
 -- pas de lancement
@@ -59,7 +44,7 @@ AddEventHandler('decompte:ISOK', function(source)
 			DecompteTextReason = GetOnscreenKeyboardResult()
 			TriggerEvent('decompte:test', -1)
 			TriggerServerEvent('InteractSound_SV:PlayOnAll', sondecompte, volume)
-			TriggerEvent("AdminTools_Decompte:sendNotification", notificationParam, "~r~".. DecompteTextTitle.. " \n~w~" .. DecompteTextReason ..".", 2.0)
+			TriggerEvent("AdminTools_General:sendNotification", config.notificationParam, "CHAR_CALL911", "~r~".. DecompteTextTitle.. " \n~w~" .. DecompteTextReason ..".", 2.0)
 		end
 	end
 end)
@@ -96,7 +81,7 @@ Citizen.CreateThread(function()
 				DisplayHelpText("~w~Il vous reste ~r~".. secondsRemaining .. " ~w~Seconde.")
 			elseif (secondsRemaining == 0) then
 				TriggerEvent('announceT')
-				--TriggerEvent("AdminTools_Decompte:sendNotification", notificationParam, "~w~".. DecompteTextReason ..".", 1.0)
+				--TriggerEvent("AdminTools_General:sendNotification", config.notificationParam, "CHAR_CALL911", "~w~".. DecompteTextReason ..".", 1.0)
 				holdingupTest = false
 			end
 		end

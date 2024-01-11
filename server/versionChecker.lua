@@ -8,11 +8,11 @@ if (config.enableVersionNotifier) then
     print("["..GetCurrentResourceName().."] Checking for updates...\n")
 
     Citizen.CreateThread( function() 
-		local updatepath = "/h0ldhaven/fivem-admintools" -- git path
-		local resourceName = GetCurrentResourceName() -- resource name
+        local updatepath = "/h0ldhaven/fivem-admintools" -- git path
+        local resourceName = GetCurrentResourceName() -- resource name
 
-		function checkVersion(err, responseText, headers)
-			local currentVersion = LoadResourceFile(GetCurrentResourceName(), "version") -- get local file
+        function checkVersion(err, responseText, headers)
+            local currentVersion = LoadResourceFile(GetCurrentResourceName(), "version") -- get local file
 
             if not responseText then
                 print("Update check failed, where did the remote repository go ? ")
@@ -23,12 +23,13 @@ if (config.enableVersionNotifier) then
             else
                 print("["..resourceName.."]: tout est à jour !")
             end
-		end
+        end
 
         if (config.isDev == true) then
             PerformHttpRequest("https://raw.githubusercontent.com"..updatepath.."/dev/version", checkVersion, "GET")
         else
             PerformHttpRequest("https://raw.githubusercontent.com"..updatepath.."/main/version", checkVersion, "GET")
         end
-	end)
+    end)
+
 end

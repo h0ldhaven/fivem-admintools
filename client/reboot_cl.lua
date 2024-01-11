@@ -1,6 +1,6 @@
-----------------------------------------------------------------------------------------------
-----------------------------------   VARIABLES LOCALES   -------------------------------------
-----------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
+----------------------------------   LOCAL VARIABLES   -------------------------------------
+--------------------------------------------------------------------------------------------
 
 local secondsRemaining = 0
 local holdingupReboot = false
@@ -11,52 +11,21 @@ announcestringR = false
 lastforR = 5
 
 ----------------------------------------------------------------------------------------------
-----------------------------------   NOTIFICATIONS   -----------------------------------------
-----------------------------------------------------------------------------------------------
-function Notify(text)
-    SetNotificationTextEntry('STRING')
-    AddTextComponentString(text)
-    DrawNotification(false, true)
-end
-
-function DisplayHelpText(str)
-	SetTextComponentFormat("STRING")
-	AddTextComponentString(str)
-	DisplayHelpTextFromStringLabel(0, 0, 1, -1)
-end
-
-function drawTxt(text,font,centre,x,y,scale,r,g,b,a)
-	SetTextFont(font)
-	SetTextProportional(0)
-	SetTextScale(scale, scale)
-	SetTextColour(r, g, b, a)
-	SetTextDropShadow(0, 0, 0, 0,255)
-	SetTextEdge(1, 0, 0, 0, 255)
-	SetTextDropShadow()
-	SetTextOutline()
-	SetTextCentre(centre)
-	SetTextEntry("STRING")
-	AddTextComponentString(text)
-	DrawText(x , y)
-end
-
-
-
-
-
-----------------------------------------------------------------------------------------------
 ---------------------------------------   SCRIPT   -------------------------------------------
 ----------------------------------------------------------------------------------------------
+RegisterNetEvent("AdminTools_Reboot:RunCommandServer")
+AddEventHandler("AdminTools_Reboot:RunCommandServer", function()
+	if (isAdmin()) then
+		TriggerEvent("AdminTools_Reboot:LaunchReboot")
+	else
+		TriggerEvent("AdminTools:IsNotAdmin")
+	end
+end)
 
 RegisterNetEvent("AdminTools_Reboot:LaunchReboot")
 AddEventHandler("AdminTools_Reboot:LaunchReboot", function()
 	TriggerEvent('es_countdown:reboot', -1)
 	TriggerEvent("es_countdown:setSeason", -1)
-end)
-
-RegisterNetEvent("AdminTools_Reboot:RunCommandServer")
-AddEventHandler("AdminTools_Reboot:RunCommandServer", function()
-	TriggerServerEvent('AdminTools_Reboot:RunCommand', source)
 end)
 
 RegisterNetEvent("es_countdown:setSeason")
@@ -76,7 +45,7 @@ RegisterNetEvent('es_countdown:reboot')
 AddEventHandler('es_countdown:reboot', function()
 	holdingupReboot = true
 	secondsRemaining = 30
-	TriggerEvent("AdminTools_Reboot:sendNotification", notificationParam, "~w~Une ~r~tempête ~w~arrive en ville, ~g~protegez vous !", 2.5)
+	TriggerEvent("AdminTools_General:sendNotification", config.notificationParam, "CHAR_CALL911", i18n.translate("reboot_warning"), 2.5)
 end)
 
 Citizen.CreateThread(function()
@@ -107,7 +76,7 @@ Citizen.CreateThread(function()
 				holdingupReboot = false
 				TriggerServerEvent('Spawn:SaveBeforeReboot')
 				Citizen.Wait(3000)
-				TriggerServerEvent('AdminTools_Reboot:Stop')
+				TriggerServerEvent('AdminTools:StopServer')
 			end
 		end
 	end
