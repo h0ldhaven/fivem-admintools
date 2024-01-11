@@ -1,7 +1,5 @@
 -----------------------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------------------------
 -----------------------------------------    SCRIPT    ----------------------------------------------------
------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------
 
 local noclip = false
@@ -11,10 +9,41 @@ local StatusNoclip = i18n.translate("Noclip_enabled") .. i18n.translate("Noclip_
 
 RegisterNetEvent("AdminTools:noclip")
 AddEventHandler("AdminTools:noclip", function()
-	admin_no_clip()
+	if (isAdmin()) then
+		admin_noClip()
+	else
+		TriggerEvent("AdminTools:IsNotAdmin")
+	end
 end)
 
-function admin_no_clip()
+RegisterNetEvent("AdminTools:noclip+")
+AddEventHandler("AdminTools:noclip+", function()
+	if (isAdmin()) then
+		addNoclipSpeed()
+	else
+		TriggerEvent("AdminTools:IsNotAdmin")
+	end
+end)
+
+RegisterNetEvent("AdminTools:noclip-")
+AddEventHandler("AdminTools:noclip-", function()
+	if (isAdmin()) then
+		removeNoclipSpeed()
+	else
+		TriggerEvent("AdminTools:IsNotAdmin")
+	end
+end)
+
+RegisterNetEvent("AdminTools:noclip0")
+AddEventHandler("AdminTools:noclip0", function()
+	if (isAdmin()) then
+		resetNoclipSpeed()
+	else
+		TriggerEvent("AdminTools:IsNotAdmin")
+	end
+end)
+
+function admin_noClip()
 	noclip = not noclip
 	local ped = GetPlayerPed(-1)
 	if noclip then -- activé
@@ -34,8 +63,7 @@ function admin_no_clip()
 	end
 end
 
-RegisterNetEvent("AdminTools:noclip+")
-AddEventHandler("AdminTools:noclip+", function()
+function addNoclipSpeed()
 	if noclip then
 		if (noclip_speed >= 1.8) then
 			TriggerEvent("AdminTools_General:sendNotification", config.notificationParam, "CHAR_DETONATEPHONE", i18n.translate("Noclip_max_speed") .. "~y~ " .. noclip_speed .. "~r~." , 0.100)
@@ -45,12 +73,11 @@ AddEventHandler("AdminTools:noclip+", function()
 			StatusNoclip = i18n.translate("Noclip_enabled") .. i18n.translate("Noclip_speed") .. "("..noclip_speed..")."
 		end
 	else
-		TriggerEvent("AdminTools_General:sendNotification", config.notificationParam, "CHAR_DETONATEPHONE", i18n.translate("Noclip_no_noclip"), 0.100)
+		TriggerEvent("AdminTools_General:sendNotification", config.notificationParam, "CHAR_DETONATEPHONE", i18n.translate("noclip_disabled"), 0.100)
 	end
-end)
+end
 
-RegisterNetEvent("AdminTools:noclip-")
-AddEventHandler("AdminTools:noclip-", function()
+function removeNoclipSpeed()
 	if noclip then
 		if (noclip_speed <= 0.3) then
 			TriggerEvent("AdminTools_General:sendNotification", config.notificationParam, "CHAR_DETONATEPHONE", i18n.translate("Noclip_min_speed") .. "~y~ ".. noclip_speed .. "~r~." , 0.100)
@@ -60,42 +87,18 @@ AddEventHandler("AdminTools:noclip-", function()
 			StatusNoclip = i18n.translate("Noclip_enabled") .. i18n.translate("Noclip_speed") .. "("..noclip_speed..")."
 		end
 	else
-		TriggerEvent("AdminTools_General:sendNotification", config.notificationParam, "CHAR_DETONATEPHONE", i18n.translate("Noclip_no_noclip"), 0.100)
+		TriggerEvent("AdminTools_General:sendNotification", config.notificationParam, "CHAR_DETONATEPHONE", i18n.translate("noclip_disabled"), 0.100)
 	end
-end)
+end
 
-RegisterNetEvent("AdminTools:noclip0")
-AddEventHandler("AdminTools:noclip0", function()
+function resetNoclipSpeed()
 	if noclip then
 		noclip_speed = 1.0
 		--TriggerEvent("AdminTools_General:sendNotification", notificationParam, "~w~Vitesse du noclip: ".. noclip_speed ..".", 0.100)
 		StatusNoclip = i18n.translate("Noclip_enabled") .. i18n.translate("Noclip_speed") .. "("..noclip_speed..")."
 	else
-		TriggerEvent("AdminTools_General:sendNotification", config.notificationParam, "CHAR_DETONATEPHONE", i18n.translate("Noclip_no_noclip"), 0.100)
+		TriggerEvent("AdminTools_General:sendNotification", config.notificationParam, "CHAR_DETONATEPHONE", i18n.translate("noclip_disabled"), 0.100)
 	end
-end)
-
-function getPosition()
-	local x,y,z = table.unpack(GetEntityCoords(GetPlayerPed(-1),true))
-	return x,y,z
-end
-
-function getCamDirection()
-	local heading = GetGameplayCamRelativeHeading()+GetEntityHeading(GetPlayerPed(-1))
-	local pitch = GetGameplayCamRelativePitch()
-
-	local x = -math.sin(heading*math.pi/180.0)
-	local y = math.cos(heading*math.pi/180.0)
-	local z = math.sin(pitch*math.pi/180.0)
-
-	local len = math.sqrt(x*x+y*y+z*z)
-	if len ~= 0 then
-		x = x/len
-		y = y/len
-		z = z/len
-	end
-
-	return x,y,z
 end
 
 function isNoclip()

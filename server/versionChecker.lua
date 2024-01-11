@@ -1,6 +1,6 @@
 -- check if user use dev version
 if (config.isDev == true) then
-	RconPrint("/!\\ Vous executez la version developpeur du script: ADMINTOOL !\n")
+	RconPrint(i18n.translate("console_use_dev"))
 end
 
 -- check version and compare with git
