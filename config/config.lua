@@ -62,6 +62,13 @@ config = {
 	lang = 'fr',
 	isDev = false,
 	debugMessage = false,
+	git = "/h0ldhaven/fivem-admintools", -- git path
+}
+
+git = {
+	path = "/h0ldhaven/fivem-admintools", -- git path
+	main = "/main/version",
+	dev = "/dev/version",
 }
 
 i18n.setLang(tostring(config.lang))
