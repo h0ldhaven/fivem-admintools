@@ -26,9 +26,9 @@ if (config.enableVersionNotifier) then
         end
 
         if (config.devVersion == true) then
-            PerformHttpRequest("https://raw.githubusercontent.com" .. git.path .. git.dev, checkVersion, "GET")
+            PerformHttpRequest(git.raw .. git.path .. git.dev, checkVersion, "GET")
         else
-            PerformHttpRequest("https://raw.githubusercontent.com" .. git.path .. git.main, checkVersion, "GET")
+            PerformHttpRequest(git.raw .. git.path .. git.main, checkVersion, "GET")
         end
     end)
 
