@@ -60,8 +60,16 @@ config = {
 	enableVersionNotifier = true, --notify is a new version is available (server console)
 	notificationParam = 1,
 	lang = 'fr',
-	isDev = false,
+	devVersion = false,
 	debugMessage = false,
+	git = "/h0ldhaven/fivem-admintools", -- git path
+}
+
+git = {
+	raw = "https://raw.githubusercontent.com",
+	path = "/h0ldhaven/fivem-admintools", -- git path
+	main = "/main/version",
+	dev = "/dev/version",
 }
 
 i18n.setLang(tostring(config.lang))

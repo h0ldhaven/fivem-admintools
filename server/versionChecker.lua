@@ -1,5 +1,5 @@
 -- check if user use dev version
-if (config.isDev == true) then
+if (config.devVersion == true) then
 	RconPrint(i18n.translate("console_use_dev"))
 end
 
@@ -8,7 +8,6 @@ if (config.enableVersionNotifier) then
     print("["..GetCurrentResourceName().."]: " .. i18n.translate("console_checking_update"))
 
     Citizen.CreateThread( function() 
-        local updatepath = "/h0ldhaven/fivem-admintools" -- git path
         local resourceName = GetCurrentResourceName() -- resource name
 
         function checkVersion(err, responseText, headers)
@@ -26,10 +25,10 @@ if (config.enableVersionNotifier) then
             end
         end
 
-        if (config.isDev == true) then
-            PerformHttpRequest("https://raw.githubusercontent.com"..updatepath.."/dev/version", checkVersion, "GET")
+        if (config.devVersion == true) then
+            PerformHttpRequest(git.raw .. git.path .. git.dev, checkVersion, "GET")
         else
-            PerformHttpRequest("https://raw.githubusercontent.com"..updatepath.."/main/version", checkVersion, "GET")
+            PerformHttpRequest(git.raw .. git.path .. git.main, checkVersion, "GET")
         end
     end)
 
