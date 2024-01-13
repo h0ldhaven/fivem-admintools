@@ -3,7 +3,7 @@ game { 'gta5' }
 
 author 'h0ldhaven'
 description 'Admin tools'
-version '1.1.2'
+version '1.1.3'
 
 clr_disable_task_scheduler 'yes'
 
