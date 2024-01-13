@@ -1,5 +1,5 @@
 -- check if user use dev version
-if (config.isDev == true) then
+if (config.devVersion == true) then
 	RconPrint(i18n.translate("console_use_dev"))
 end
 
@@ -25,7 +25,7 @@ if (config.enableVersionNotifier) then
             end
         end
 
-        if (config.isDev == true) then
+        if (config.devVersion == true) then
             PerformHttpRequest("https://raw.githubusercontent.com" .. git.path .. git.dev, checkVersion, "GET")
         else
             PerformHttpRequest("https://raw.githubusercontent.com" .. git.path .. git.main, checkVersion, "GET")

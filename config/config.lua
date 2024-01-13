@@ -60,7 +60,7 @@ config = {
 	enableVersionNotifier = true, --notify is a new version is available (server console)
 	notificationParam = 1,
 	lang = 'fr',
-	isDev = false,
+	devVersion = true,
 	debugMessage = false,
 	git = "/h0ldhaven/fivem-admintools", -- git path
 }
