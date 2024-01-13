@@ -14,6 +14,8 @@ i18n.importData("fr", {
 	console_update_new_version = "Nouvelle Version : ",
 
 	console_update_version_ok = "^2Tout est à jour ! enjoy !",
+
+	unsupported_version = "^2Votre version n'est pas prise en charge par le script.",
 	
 	-- admin general category
 	not_an_admin = "~r~Vous devez être administrateur pour faire cela.",

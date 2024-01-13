@@ -1,6 +1,6 @@
 -- check if user use dev version
 if (config.devVersion == true) then
-	RconPrint(i18n.translate("console_use_dev"))
+	print(i18n.translate("console_use_dev"))
 end
 
 -- check version and compare with git
@@ -31,5 +31,4 @@ if (config.enableVersionNotifier) then
             PerformHttpRequest(git.raw .. git.path .. git.main, checkVersion, "GET")
         end
     end)
-
 end

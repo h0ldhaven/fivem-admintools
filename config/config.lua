@@ -59,10 +59,11 @@ rank = {
 config = {
 	enableVersionNotifier = true, --notify is a new version is available (server console)
 	notificationParam = 1,
-	lang = 'fr',
 	devVersion = false,
 	debugMessage = false,
-	git = "/h0ldhaven/fivem-admintools", -- git path
+	lang = 'fr',
+	-- available versions es | es_extended
+	framework = "es",
 }
 
 git = {
