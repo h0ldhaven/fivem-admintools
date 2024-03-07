@@ -78,19 +78,25 @@ Menu.item = {
 		--{ ['Title'] = 'Ajouter 100$ banque', ['Event'] = 'AdminTools:addbank', ['Close'] = false },
 		--{ ['Title'] = 'Retirer 100$ banque', ['Event'] = 'AdminTools:rembank', ['Close'] = false },
 		
-		--[[{['Title'] = 'TEST Depanneur', ['SubMenu'] = {
-            ['Title'] = 'TEST Depanneur',
+		-- {['Title'] = 'TEST Depanneur', ['SubMenu'] = {
+        --     ['Title'] = 'TEST Depanneur',
+        --         ['Items'] = {
+        --             { ['Title'] = 'Réparer le véhicule', ['Event'] = 'DepanneurFunction:repair', ['Close'] = true},
+		-- 			{ ['Title'] = 'Attacher/Détacher', ['Event'] = 'depann:tow', ['Close'] = true},
+		-- 			{ ['Title'] = 'Nettoyer le véhicule', ['Event'] = 'DepanneurFunction:clean', ['Close'] = true},
+		-- 			{ ['Title'] = 'ouvrir/Fermer le capot', ['Event'] = 'depann:OPENCLOSECAPOTDEPANNEUR', ['Close'] = true},
+		-- 			{ ['Title'] = 'test', ['Event'] = 'EmoteTest', ['Close'] = false},
+        --         }
+        --     }
+		-- },
+
+        {['Title'] = 'Liste des joueurs', ['Event'] = 'AdminTools_TAB:GetPlayers', ['Close'] = false, ['SubMenu'] = {
+            ['Title'] = 'Joueurs:',
                 ['Items'] = {
-                    { ['Title'] = 'Réparer le véhicule', ['Event'] = 'DepanneurFunction:repair', ['Close'] = true},
-					{ ['Title'] = 'Attacher/Détacher', ['Event'] = 'depann:tow', ['Close'] = true},
-					{ ['Title'] = 'Nettoyer le véhicule', ['Event'] = 'DepanneurFunction:clean', ['Close'] = true},
-					{ ['Title'] = 'ouvrir/Fermer le capot', ['Event'] = 'depann:OPENCLOSECAPOTDEPANNEUR', ['Close'] = true},
-					{ ['Title'] = 'test', ['Event'] = 'EmoteTest', ['Close'] = false},
+                    { ['Title'] = 'Envoyer la foudre', ['Event'] = 'AdminTools:Foudre', ['Close'] = false },
                 }
             }
-		},]]--
-		
-		{ ['Title'] = 'Get player list', ['Event'] = 'AdminTools_TAB:GetPlayers', ['Close'] = true },
+		},
         
 		{ ['Title'] = 'Fermer le Menu', ['Event'] = '', ['Close'] = true },
 		

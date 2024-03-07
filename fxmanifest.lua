@@ -17,15 +17,15 @@ client_scripts {
     "client/menu.lua",
 
     "client/poshud.lua",
-    "client/reboot_cl.lua",
-    "client/annonce_alpha_cl.lua",
-    "client/adminskin_cl.lua",
-    "client/admincar_cl.lua",
+    "client/reboot.lua",
+    "client/annonce_alpha.lua",
+    "client/adminskin.lua",
+    "client/admincar.lua",
     "client/depanneurs_dev.lua",
-    "client/teleportation_cl.lua",
-    "client/noclip_cl.lua",
-    "client/visiblemode_cl.lua",
-    "client/tablist_cl.lua"
+    "client/teleportation.lua",
+    "client/noclip.lua",
+    "client/visiblemode.lua",
+    "client/tablist.lua"
 }
 
 server_scripts {
@@ -38,4 +38,8 @@ server_scripts {
     "server/versionChecker.lua",
 
     "@mysql-async/lib/MySQL.lua"
+}
+
+shared_scripts {
+    "@es_extended/imports.lua",   
 }

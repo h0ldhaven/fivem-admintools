@@ -3,7 +3,7 @@ i18n.importData("fr", {
 	script_name = "^1[ADMINTOOLS]: ^7",
 	console_use_dev = "^1/!\\ Vous executez la version developpeur du script: ADMINTOOL ! ^7\n",
 
-	console_checking_update = "Vérification des mises à jour.. \n",
+	console_checking_update = "Vérification des mises à jour.. ^7\n",
 
 	console_update_fail = "^1La vérification de la mise à jour a échoué, où est passé le référentiel distant ? ^7",
 
@@ -13,7 +13,7 @@ i18n.importData("fr", {
 	console_update_actual_version = "Version Actuelle : ",
 	console_update_new_version = "Nouvelle Version : ",
 
-	console_update_version_ok = "^2Tout est à jour ! enjoy !",
+	console_update_version_ok = "^2Tout est à jour ! enjoy !^7",
 
 	unsupported_version = "^2Votre version n'est pas prise en charge par le script.",
 	

@@ -52,8 +52,7 @@ AddEventHandler("admincar:spawncar", function()
 	
 		if IsInVehicle() then
 			TriggerEvent("AdminTools_General:sendNotification", config.notificationParam, "CHAR_LS_CUSTOMS", i18n.translate("car_spawn_fail"), 0.350)
-		elseis_an_admin
-				
+		else
 			if veh == nil then
 				TriggerEvent("AdminTools_General:sendNotification", config.notificationParam, "CHAR_LS_CUSTOMS", i18n.translate("car_spawn_fail"), 0.350)
 			else

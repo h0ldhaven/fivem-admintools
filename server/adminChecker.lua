@@ -10,12 +10,15 @@ AddEventHandler('AdminTools:CheckPerm', function()
             local group = user.getGroup();
 
             -- set args before sending result to client
+            -- if player is in admin group
             if (group == tostring("admin")) then
                 rank.name = "admin"
                 rank.isAdmin = true
-            elseif (group == tostring("modo")) then
+            -- if player is in mod group
+            elseif (group == tostring("mod")) then
                 rank.name = "modo"
                 rank.isAdmin = false
+            -- player have another group, set own group to "user"
             else
                 rank.name = "user"
                 rank.isAdmin = false
@@ -24,22 +27,29 @@ AddEventHandler('AdminTools:CheckPerm', function()
             -- send client event with args rank.name and rank.isAdmin
             TriggerClientEvent('AdminTools:ResultPerm', _source, rank.name, rank.isAdmin)
         end)
+    -- es_extended framework
     elseif (config.framework == tostring("es_extended")) then
-        local xPlayer = ESX.GetPlayerFromId(_source)
-        local playerGroup = xPlayer.getGroup()
 
-        if (playerGroup == tostring("admin")) then
+        -- player definition
+        local xPlayer = ESX.GetPlayerFromId(_source)
+
+        -- if player is in admin group
+        if (xPlayer.group == tostring("admin")) then
             rank.name = "admin"
             rank.isAdmin = true
-        elseif (group == tostring("modo")) then
+        -- if player is in mod group
+        elseif (xPlayer.group == tostring("mod")) then
             rank.name = "modo"
             rank.isAdmin = false
+        -- player have another group, set own group to "user"
         else
             rank.name = "user"
             rank.isAdmin = false
         end
+        -- send result to client
         TriggerClientEvent('AdminTools:ResultPerm', _source, rank.name, rank.isAdmin)
     else
+        -- if framework is incorrect, send error
         print(i18n.translate("unsupported_version"))
     end
 end)
